@@ -1,3 +1,14 @@
 <resources>
-    <string name="app_name">AppEventosGrupo21UNIR</string>
+    <string name="app_name">Registrar Evento</string>
+    <string name="title_main">Ingrese Información del Evento</string>
+    <string name="label_event_type">Tipo de Evento</string>
+    <string name="label_name_event">Nombre del Evento</string>
+    <string name="label_date_init">Fecha de Inicio del Evento</string>
+    <string name="label_date_end">Fecha de Fin del Evento</string>
+    <string name="label_duration_event">Todo el día</string>
+    <string name="label_description_event">Descripción del Evento</string>
+    <string name="label_button_confirm">Confirmar</string>
+    <string name="label_button_cancel">Cancelar</string>
+    <string name="label_si">Si</string>
+    <string name="label_no">No</string>
 </resources>

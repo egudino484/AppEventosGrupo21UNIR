@@ -1,0 +1,8 @@
+<resources>
+    <string-array name="eventType">
+        <item>Seleccione</item>
+        <item>Cita</item>
+        <item>Aniversario</item>
+        <item>Cuenta Regresiva</item>
+    </string-array>
+</resources>
