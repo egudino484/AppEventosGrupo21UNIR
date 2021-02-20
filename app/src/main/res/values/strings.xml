@@ -5,6 +5,7 @@
     <string name="label_name_event">Nombre del Evento</string>
     <string name="label_date_init">Fecha de Inicio del Evento</string>
     <string name="label_date_end">Fecha de Fin del Evento</string>
+    <string name="label_hour">Hora</string>
     <string name="label_duration_event">Todo el día</string>
     <string name="label_description_event">Descripción del Evento</string>
     <string name="label_button_confirm">Confirmar</string>

@@ -55,40 +55,68 @@
 
     <EditText
         android:id="@+id/dateInit"
-        android:layout_width="316dp"
+        android:layout_width="230dp"
         android:layout_height="48dp"
         android:layout_marginStart="45dp"
         android:layout_marginTop="22dp"
-        android:layout_marginEnd="45dp"
+        android:layout_marginEnd="6dp"
         android:layout_marginBottom="22dp"
+        android:clickable="true"
         android:ems="10"
+        android:focusable="false"
         android:hint="@string/label_date_init"
         android:inputType="none"
-        android:focusable="false"
-        android:clickable="true"
         app:layout_constraintBottom_toTopOf="@+id/dateEnd"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/hourInit"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nameEvent" />
 
     <EditText
+        android:id="@+id/hourInit"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="45dp"
+        android:layout_marginEnd="45dp"
+        android:clickable="true"
+        android:focusable="false"
+        android:ems="10"
+        android:hint="@string/label_hour"
+        android:inputType="none"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nameEvent" />
+
+    <EditText
         android:id="@+id/dateEnd"
-        android:layout_width="316dp"
+        android:layout_width="230dp"
         android:layout_height="48dp"
         android:layout_marginStart="45dp"
         android:layout_marginTop="24dp"
-        android:layout_marginEnd="45dp"
+        android:layout_marginEnd="12dp"
+        android:clickable="true"
         android:ems="10"
+        android:focusable="false"
         android:hint="@string/label_date_end"
         android:inputType="none"
-        android:focusable="false"
-        android:clickable="true"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/hourEnd"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dateInit" />
 
+
+    <EditText
+        android:id="@+id/hourEnd"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="45dp"
+        android:clickable="true"
+        android:focusable="false"
+        android:ems="10"
+        android:hint="@string/label_hour"
+        android:inputType="none"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/hourInit" />
 
     <Switch
         android:id="@+id/switchEvent"
@@ -140,6 +168,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/confirm"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName2" />
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
