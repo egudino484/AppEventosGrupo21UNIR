@@ -2,13 +2,17 @@ package com.unir.app.eventos.plataf.sw;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TimePicker;
 
 import java.util.Calendar;
@@ -122,4 +126,61 @@ public class MainActivity extends AppCompatActivity {
         editText.setText(hours);
     }
 
+    public void confirmEvent(View view) {
+        String errorMessage = "";
+        if (spinnerEvent.getSelectedItemId() == 0) {
+            errorMessage = "* Debe seleccionar un tipo de evento.\n";
+        }
+        EditText nombreEvento = findViewById(R.id.nameEvent);
+        if (nombreEvento.getText().length() == 0) {
+            errorMessage += "* Debe ingresar el nombre del evento.\n";
+        }
+        if (dateInit.getText().length() == 0) {
+            errorMessage += "* Debe ingresar la fecha de inicio del evento.\n";
+        }
+        if (hourInit.getText().length() == 0) {
+            errorMessage += "* Debe ingresar la hora de inicio del evento.\n";
+        }
+        if (dateEnd.getText().length() == 0) {
+            errorMessage += "* Debe ingresar la fecha de finalización del evento.\n";
+        }
+        if (hourEnd.getText().length() == 0) {
+            errorMessage += "* Debe ingresar la hora de finalización del evento.\n";
+        }
+        EditText descripcionEvento = findViewById(R.id.editTextTextPersonName2);
+        if (descripcionEvento.getText().length() == 0) {
+            errorMessage += "* Debe ingresar la descripción del evento.\n";
+        }
+
+        if (!errorMessage.isEmpty()) {
+            AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+            builder1.setMessage(errorMessage);
+            builder1.setCancelable(true);
+
+            builder1.setPositiveButton(
+                    "Aceptar",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+
+            AlertDialog alert11 = builder1.create();
+            alert11.show();
+        }
+    }
+
+    public void cancelEvent(View view) {
+        spinnerEvent.setSelection(0);
+        EditText nombreEvento = findViewById(R.id.nameEvent);
+        nombreEvento.setText("");
+        dateInit.setText("");
+        hourInit.setText("");
+        dateEnd.setText("");
+        hourEnd.setText("");
+        Switch switchEvent = findViewById(R.id.switchEvent);
+        switchEvent.setChecked(false);
+        EditText descripcionEvento = findViewById(R.id.editTextTextPersonName2);
+        descripcionEvento.setText("");
+    }
 }
