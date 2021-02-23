@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -25,7 +26,9 @@ public class MainActivity extends AppCompatActivity {
     EditText dateEnd;
     EditText hourInit;
     EditText hourEnd;
-
+    EditText nombreEvento;
+    Switch switchAllDayEvent;
+    EditText descripcionEvento;
     private int lastYear, lastMonth, lastDayMonthYear;
     private int lastHours, lastMinutes;
 
@@ -33,7 +36,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //Init UI Components
+        nombreEvento = findViewById(R.id.nameEvent);
+        descripcionEvento = findViewById(R.id.editTextTextPersonName2);
+
         spinnerEvent = findViewById(R.id.idSpiner);
+
+        switchAllDayEvent = findViewById(R.id.switchAllDayEvent);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.eventType, android.R.layout.simple_spinner_item);
         spinnerEvent.setAdapter(adapter);
@@ -131,7 +140,6 @@ public class MainActivity extends AppCompatActivity {
         if (spinnerEvent.getSelectedItemId() == 0) {
             errorMessage = "* Debe seleccionar un tipo de evento.\n";
         }
-        EditText nombreEvento = findViewById(R.id.nameEvent);
         if (nombreEvento.getText().length() == 0) {
             errorMessage += "* Debe ingresar el nombre del evento.\n";
         }
@@ -147,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
         if (hourEnd.getText().length() == 0) {
             errorMessage += "* Debe ingresar la hora de finalización del evento.\n";
         }
-        EditText descripcionEvento = findViewById(R.id.editTextTextPersonName2);
+
         if (descripcionEvento.getText().length() == 0) {
             errorMessage += "* Debe ingresar la descripción del evento.\n";
         }
@@ -167,7 +175,22 @@ public class MainActivity extends AppCompatActivity {
 
             AlertDialog alert11 = builder1.create();
             alert11.show();
+        }else{
+            enviarDatosSiguientePantalla();
         }
+    }
+    public void enviarDatosSiguientePantalla(){
+        Intent intent = new Intent(this, DetailActivity.class);
+        intent.putExtra("tipoEvento", spinnerEvent.getSelectedItem().toString());
+        intent.putExtra("nombreEvento", nombreEvento.getText().toString());
+        intent.putExtra("descripcionEvento", descripcionEvento.getText().toString());
+        intent.putExtra("fechaInicio", dateInit.getText().toString());
+        intent.putExtra("horaInicio", hourInit.getText().toString());
+        intent.putExtra("fechaFin", dateEnd.getText().toString());
+        intent.putExtra("horaFin", hourEnd.getText().toString());
+        intent.putExtra("switchAllDayEvent", switchAllDayEvent.isChecked());
+        startActivity(intent);
+
     }
 
     public void cancelEvent(View view) {
@@ -178,7 +201,7 @@ public class MainActivity extends AppCompatActivity {
         hourInit.setText("");
         dateEnd.setText("");
         hourEnd.setText("");
-        Switch switchEvent = findViewById(R.id.switchEvent);
+        Switch switchEvent = findViewById(R.id.switchAllDayEvent);
         switchEvent.setChecked(false);
         EditText descripcionEvento = findViewById(R.id.editTextTextPersonName2);
         descripcionEvento.setText("");
