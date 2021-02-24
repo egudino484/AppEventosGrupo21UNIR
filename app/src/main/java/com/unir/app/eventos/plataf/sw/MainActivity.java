@@ -8,12 +8,15 @@ import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
 import java.util.Calendar;
@@ -29,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     EditText nombreEvento;
     Switch switchAllDayEvent;
     EditText descripcionEvento;
+    TextView textViewInicio, textViewFin;;
     private int lastYear, lastMonth, lastDayMonthYear;
     private int lastHours, lastMinutes;
 
@@ -38,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //Init UI Components
         nombreEvento = findViewById(R.id.nameEvent);
+        textViewInicio = findViewById(R.id.textViewInicioMain);
+        textViewFin = findViewById(R.id.textViewFinMain);
         descripcionEvento = findViewById(R.id.editTextTextPersonName2);
 
         spinnerEvent = findViewById(R.id.idSpiner);
@@ -81,6 +87,28 @@ public class MainActivity extends AppCompatActivity {
         hourEnd.setOnClickListener(v -> {
             TimePickerDialog dialogHourEnd = new TimePickerDialog(MainActivity.this, onTimeSetListenerEnd, lastHours, lastMinutes, false);
             dialogHourEnd.show();
+        });
+        switchAllDayEvent.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                Log.i("APP", "Checked All Day: " + b);
+
+                if(b){
+                    //disable initHour, enddate and end hour
+                    hourInit.setVisibility(View.GONE);
+                    hourEnd.setVisibility(View.GONE);
+                    dateEnd.setVisibility(View.GONE);
+                    textViewFin.setVisibility(View.GONE);
+
+                }else{
+                    hourInit.setVisibility(View.VISIBLE);
+                    hourEnd.setVisibility(View.VISIBLE);
+                    dateEnd.setVisibility(View.VISIBLE);
+                    textViewFin.setVisibility(View.VISIBLE);
+
+                }
+
+            }
         });
 
     }
@@ -146,15 +174,18 @@ public class MainActivity extends AppCompatActivity {
         if (dateInit.getText().length() == 0) {
             errorMessage += "* Debe ingresar la fecha de inicio del evento.\n";
         }
-        if (hourInit.getText().length() == 0) {
-            errorMessage += "* Debe ingresar la hora de inicio del evento.\n";
+        if(!switchAllDayEvent.isChecked()){
+            if (hourInit.getText().length() == 0) {
+                errorMessage += "* Debe ingresar la hora de inicio del evento.\n";
+            }
+            if (dateEnd.getText().length() == 0) {
+                errorMessage += "* Debe ingresar la fecha de finalización del evento.\n";
+            }
+            if (hourEnd.getText().length() == 0) {
+                errorMessage += "* Debe ingresar la hora de finalización del evento.\n";
+            }
         }
-        if (dateEnd.getText().length() == 0) {
-            errorMessage += "* Debe ingresar la fecha de finalización del evento.\n";
-        }
-        if (hourEnd.getText().length() == 0) {
-            errorMessage += "* Debe ingresar la hora de finalización del evento.\n";
-        }
+
 
         if (descripcionEvento.getText().length() == 0) {
             errorMessage += "* Debe ingresar la descripción del evento.\n";
@@ -185,10 +216,14 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("nombreEvento", nombreEvento.getText().toString());
         intent.putExtra("descripcionEvento", descripcionEvento.getText().toString());
         intent.putExtra("fechaInicio", dateInit.getText().toString());
-        intent.putExtra("horaInicio", hourInit.getText().toString());
-        intent.putExtra("fechaFin", dateEnd.getText().toString());
-        intent.putExtra("horaFin", hourEnd.getText().toString());
         intent.putExtra("switchAllDayEvent", switchAllDayEvent.isChecked());
+        if(!switchAllDayEvent.isChecked()){
+            intent.putExtra("horaInicio", hourInit.getText().toString());
+            intent.putExtra("fechaFin", dateEnd.getText().toString());
+            intent.putExtra("horaFin", hourEnd.getText().toString());
+
+        }
+
         startActivity(intent);
 
     }

@@ -6,11 +6,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class DetailActivity extends AppCompatActivity {
     TextView textViewTipo, textViewNombre, textViewFechaInicio, textViewFechaFin, textViewHoraInicio, textViewHoraFin;
     Button buttonAceptar;
+    ImageView imageViewFinEvento;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,6 +23,7 @@ public class DetailActivity extends AppCompatActivity {
         textViewFechaInicio = findViewById(R.id.textViewFechaInicioEvento);
         textViewFechaFin = findViewById(R.id.textViewFechaFinEvento);
         buttonAceptar = findViewById(R.id.buttonAceptar);
+        imageViewFinEvento = findViewById(R.id.imageViewFinEvento);
 
         buttonAceptar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,15 +45,25 @@ public class DetailActivity extends AppCompatActivity {
         String nombreEvento = getIntent().getStringExtra("nombreEvento");
         String descripcionEvento = getIntent().getStringExtra("descripcionEvento");
         String fechaInicio = getIntent().getStringExtra("fechaInicio");
-        String horaInicio = getIntent().getStringExtra("horaInicio");
-        String fechaFin = getIntent().getStringExtra("fechaFin");
-        String horaFin = getIntent().getStringExtra("horaFin");
         boolean isAllDayEvent = getIntent().getBooleanExtra("switchAllDayEvent", false);
+        if(!isAllDayEvent){
+            String horaInicio = getIntent().getStringExtra("horaInicio");
+            String fechaFin = getIntent().getStringExtra("fechaFin");
+            String horaFin = getIntent().getStringExtra("horaFin");
+            textViewFechaInicio.setText(fechaInicio + "  "+  horaInicio);
+            textViewFechaFin.setText(fechaFin + "  " + horaFin);
+
+        }else{
+            textViewFechaInicio.setText(fechaInicio + " Todo el día");
+            textViewFechaFin.setText("");
+            imageViewFinEvento.setVisibility(View.GONE);
+
+        }
+
 
         textViewTipo.setText(tipoEvento);
         textViewNombre.setText(nombreEvento+ ": "+ descripcionEvento);
-        textViewFechaInicio.setText(fechaInicio + "  "+  horaInicio);
-        textViewFechaFin.setText(fechaFin + "  " + horaFin);
+
 
     }
     public void gotoPrincipalView(){
